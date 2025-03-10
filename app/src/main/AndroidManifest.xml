@@ -2,16 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ai.elimu.filamu">
 
-    <!-- elimu.ai Content Provider (see https://github.com/elimu-ai/content-provider/blob/master/app/src/main/AndroidManifest.xml) -->
-<!--    <uses-permission android:name="${contentProviderApplicationId}.provider.READ" />-->
-
-    <!-- TODO: remove this request for permission once the Content Provider app can provide image files directly -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-<!--    <queries>-->
-<!--        <provider android:authorities="${contentProviderApplicationId}.provider.video_provider" />-->
-<!--    </queries>-->
-
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -24,7 +14,6 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme"
             android:exported="true">
             <intent-filter>

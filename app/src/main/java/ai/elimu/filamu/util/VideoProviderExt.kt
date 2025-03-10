@@ -6,8 +6,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import android.net.Uri
-import android.util.Log
 import androidx.annotation.WorkerThread
+import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -34,7 +34,7 @@ suspend fun Context.readVideoBytes(fileId: Long): ByteArray? {
         }
     } catch (e: IOException) {
         e.printStackTrace()
-        Log.e("readVideoBytes", "exception: " + e.message)
+        Timber.tag("readVideoBytes").e("exception: " + e.message)
         return null
     }
 }
@@ -60,7 +60,8 @@ fun Context.extractFirstFrameFromVideo(videoBytes: ByteArray): Bitmap? {
 
         return bitmap
     } catch (e: Exception) {
-        Log.e("tuancoltech", "extractFirstFrameFromVideo exception: " + e.message)
+        Timber.tag("extractFirstFrameFromVideo")
+            .e("exception: " + e.message)
         e.printStackTrace()
     }
     return null

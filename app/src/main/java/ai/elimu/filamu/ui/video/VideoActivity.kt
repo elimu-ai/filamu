@@ -25,17 +25,20 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 
 class VideoActivity : AppCompatActivity() {
+    
+    private val TAG = VideoActivity::class.java.name
 
     private lateinit var videoPlayer: ExoPlayer
     private lateinit var binding: ActivityVideoBinding
 
     @OptIn(UnstableApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i(javaClass.name, "onCreate")
+        Timber.tag(TAG).i("onCreate")
         super.onCreate(savedInstanceState)
 
         binding = ActivityVideoBinding.inflate(layoutInflater)
@@ -43,7 +46,7 @@ class VideoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val videoId = intent.getLongExtra(EXTRA_KEY_VIDEO_ID, 0)
-        Log.i("tuancoltech", "videoId: $videoId")
+        Timber.tag(TAG).i("videoId: $videoId")
 
         val renderersFactory = DefaultRenderersFactory(this).setEnableDecoderFallback(true)
             .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER)
@@ -68,46 +71,37 @@ class VideoActivity : AppCompatActivity() {
             val videoCodec = detectVideoCodec(this@VideoActivity, videoBytes)
 
             val codecInfo = MediaCodecUtil.getDecoderInfo("video/avc", false, false)
-            Log.d("tuancoltech", "Decoder: ${codecInfo?.name ?: "Not Found"}")
+            Timber.tag(TAG).d("Decoder: ${codecInfo?.name ?: "Not Found"}")
 
 
-            Log.d("tuancoltech", "videoBytes.length: " + videoBytes.size + ". codec: " + videoCodec)
+            Timber.tag(TAG).d("videoBytes.length: " + videoBytes.size + ". codec: " + videoCodec)
             withContext(Dispatchers.Main) {
                 // Create MediaSource from ByteArray
                 val dataSourceFactory = ByteArrayDataSourceFactory(videoBytes)
-                val mediaItem = MediaItem.Builder().setUri(/*"dummy://video.mp4"*/Uri.EMPTY)
-                    .setMimeType(MimeTypes.VIDEO_H264/*"video/x-m4v"*/)
+                val mediaItem = MediaItem.Builder().setUri(Uri.EMPTY)
+                    .setMimeType(MimeTypes.VIDEO_H264)
                     .build()
 
-//                DefaultExtractorsFactory().setMp4ExtractorFlags(Mp4Extractor.FLAG_WORKAROUND_IGNORE_TFDT)
-//                val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory, DefaultExtractorsFactory())
-//                    .createMediaSource(/*mediaItem*/mediaItem)
-
-                val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory/*, DefaultExtractorsFactory()*/)
+                val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(mediaItem)
 
                 videoPlayer.addListener(object : Player.Listener {
                     override fun onPlaybackStateChanged(playbackState: Int) {
                         super.onPlaybackStateChanged(playbackState)
-                        Log.v("tuancoltech", "onPlaybackStateChanged: " + playbackState)
+                        Log.v(TAG, "onPlaybackStateChanged: " + playbackState)
                     }
 
                     override fun onPlayerError(error: PlaybackException) {
                         super.onPlayerError(error)
-                        Log.e("tuancoltech", "onPlayerError: " + error.errorCode + "\nmessage: " + error.message + "\ncause: " + error.cause)
+                        Timber.tag(TAG)
+                            .e("onPlayerError: " + error.errorCode + "\nmessage: " + error.message + "\ncause: " + error.cause)
                     }
 
                     override fun onRenderedFirstFrame() {
                         super.onRenderedFirstFrame()
-                        Log.d("tuancoltech", "onRenderedFirstFrame")
+                        Timber.tag(TAG).d("onRenderedFirstFrame")
                     }
 
-                    override fun onEvents(player: Player, events: Player.Events) {
-                        super.onEvents(player, events)
-//                        for (i in 0..<events.size()) {
-//                            Log.d("tuancoltech", "Player event: " + events[i].toString())
-//                        }
-                    }
                 })
 
                 // Prepare and play
@@ -125,7 +119,7 @@ class VideoActivity : AppCompatActivity() {
         videoPlayer.release()
     }
 
-    fun detectVideoCodec(context: Context, videoBytes: ByteArray): String? {
+    private fun detectVideoCodec(context: Context, videoBytes: ByteArray): String? {
         // Step 1: Save ByteArray to a temporary file
         val tempFile = File(context.cacheDir, "temp_video.mp4")
         FileOutputStream(tempFile).use { it.write(videoBytes) }
