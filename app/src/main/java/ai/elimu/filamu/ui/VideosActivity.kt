@@ -1,6 +1,5 @@
 package ai.elimu.filamu.ui
 
-import ai.elimu.filamu.R
 import ai.elimu.filamu.data.video.viewmodel.VideoViewModel
 import ai.elimu.filamu.data.video.viewmodel.VideoViewModelImpl
 import ai.elimu.filamu.databinding.ActivityVideosBinding
@@ -13,10 +12,7 @@ import ai.elimu.model.v2.gson.content.VideoGson
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.GridLayout
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -29,8 +25,6 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class VideosActivity : AppCompatActivity() {
-    private var videosGridLayout: GridLayout? = null
-    private var videosProgressBar: ProgressBar? = null
 
     private lateinit var videoViewModel: VideoViewModel
     private lateinit var binding: ActivityVideosBinding
@@ -44,20 +38,17 @@ class VideosActivity : AppCompatActivity() {
         binding = ActivityVideosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        videosGridLayout = binding.gridLayoutVideos
-        videosProgressBar = binding.videosProgressBar
-
         initViewModels()
     }
 
     override fun onStart() {
-        Log.i(javaClass.name, "onStart")
+        Timber.tag(TAG).i("onStart")
         super.onStart()
 
         // Reset the state of the GridLayout
-        videosProgressBar!!.visibility = View.VISIBLE
-        videosGridLayout!!.visibility = View.GONE
-        videosGridLayout!!.removeAllViews()
+        binding.videosProgressBar.visibility = View.VISIBLE
+        binding.gridLayoutVideos.visibility = View.GONE
+        binding.gridLayoutVideos.removeAllViews()
 
         initData()
     }
@@ -68,7 +59,7 @@ class VideosActivity : AppCompatActivity() {
 
     private fun initData() {
         videoViewModel.getAllVideos { videos ->
-            Log.i(TAG, "videos.size(): " + videos.size)
+            Timber.tag(TAG).i("videos.size(): " + videos.size)
             showVideos(videos)
         }
     }
@@ -85,7 +76,7 @@ class VideosActivity : AppCompatActivity() {
 
                 var thumb: Bitmap?
                 val finalVideo = video
-                val videoView = ActivityVideosCoverViewBinding.inflate(layoutInflater, videosGridLayout, false)
+                val videoView = ActivityVideosCoverViewBinding.inflate(layoutInflater, binding.gridLayoutVideos, false)
                 CoroutineScope(Dispatchers.IO).launch {
                     val videoBytes = readVideoBytes(finalVideo.id) ?: return@launch
                     Timber.tag(TAG).d("Extracting thumb for video id: " + finalVideo.id)
@@ -108,10 +99,10 @@ class VideosActivity : AppCompatActivity() {
 
                 videoView.root.setOnClickListener(object : SingleClickListener() {
                     override fun onSingleClick(v: View?) {
-                        Log.i(TAG, "onClick")
+                        Timber.tag(TAG).i("onClick")
 
-                        Log.i(TAG, "video.getId(): " + finalVideo.id)
-                        Log.i(TAG, "video.getTitle(): " + finalVideo.title)
+                        Timber.tag(TAG).i("video.getId(): " + finalVideo.id
+                                + ". Title: " + finalVideo.title)
 
                         val intent = Intent(applicationContext, VideoActivity::class.java)
                         intent.putExtra(
@@ -122,11 +113,11 @@ class VideosActivity : AppCompatActivity() {
                     }
                 })
 
-                runOnUiThread {
-                    videosGridLayout!!.addView(videoView.root)
-                    if (videosGridLayout!!.childCount == videos.size) {
-                        videosProgressBar!!.visibility = View.GONE
-                        videosGridLayout!!.visibility = View.VISIBLE
+                withContext(Dispatchers.Main) {
+                    binding.gridLayoutVideos.addView(videoView.root)
+                    if (binding.gridLayoutVideos.childCount == videos.size) {
+                        binding.videosProgressBar.visibility = View.GONE
+                        binding.gridLayoutVideos.visibility = View.VISIBLE
                     }
                 }
             }
