@@ -18,13 +18,11 @@ android {
 
     buildTypes {
         debug {
-//            manifestPlaceholders = [contentProviderApplicationId: "ai.elimu.content_provider.debug"]
             buildConfigField("String", "CONTENT_PROVIDER_APPLICATION_ID", '"ai.elimu.content_provider.debug"')
             buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics.debug"')
         }
         release {
             minifyEnabled false
-//            manifestPlaceholders = [contentProviderApplicationId: "ai.elimu.content_provider"]
             buildConfigField("String", "CONTENT_PROVIDER_APPLICATION_ID", '"ai.elimu.content_provider"')
             buildConfigField("String", "ANALYTICS_APPLICATION_ID", '"ai.elimu.analytics"')
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -52,6 +50,7 @@ dependencies {
     implementation libs.elimu.model
     implementation libs.elimu.content.provider
     implementation libs.hilt.android
+    implementation libs.timber
 
     kapt libs.hilt.compiler
     testImplementation libs.junit
