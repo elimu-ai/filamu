@@ -1,34 +1,31 @@
-package ai.elimu.filamu;
+package ai.elimu.filamu
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
+import ai.elimu.filamu.ui.VideosActivity
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import timber.log.Timber
 
-import androidx.appcompat.app.AppCompatActivity;
+class MainActivity : AppCompatActivity() {
+    private val TAG = javaClass.name
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.tag(TAG).i("onCreate")
+        super.onCreate(savedInstanceState)
 
-import ai.elimu.filamu.ui.VideosActivity;
-
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Log.i(getClass().getName(), "onCreate");
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main)
 
         // Verify that the content-provider APK has been installed
         // TODO
     }
 
-    @Override
-    protected void onStart() {
-        Log.i(getClass().getName(), "onStart");
-        super.onStart();
+    override fun onStart() {
+        Timber.tag(TAG).i("onStart")
+        super.onStart()
 
-        Intent intent = new Intent(this, VideosActivity.class);
-        startActivity(intent);
+        val intent = Intent(this, VideosActivity::class.java)
+        startActivity(intent)
 
-        finish();
+        finish()
     }
 }
