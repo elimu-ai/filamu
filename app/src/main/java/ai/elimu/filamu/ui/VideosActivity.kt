@@ -107,7 +107,7 @@ class VideosActivity : AppCompatActivity() {
 
 
                 videoView.root.setOnClickListener(object : SingleClickListener() {
-                    override fun onSingleClick(v: View) {
+                    override fun onSingleClick(v: View?) {
                         Log.i(TAG, "onClick")
 
                         Log.i(TAG, "video.getId(): " + finalVideo.id)
