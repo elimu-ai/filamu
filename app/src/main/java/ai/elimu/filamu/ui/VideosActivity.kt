@@ -6,11 +6,8 @@ import ai.elimu.filamu.databinding.ActivityVideosBinding
 import ai.elimu.filamu.databinding.ActivityVideosCoverViewBinding
 import ai.elimu.filamu.ui.video.VideoActivity
 import ai.elimu.filamu.util.SingleClickListener
-import ai.elimu.filamu.util.extractFirstFrameFromVideo
-import ai.elimu.filamu.util.readVideoBytes
 import ai.elimu.model.v2.gson.content.VideoGson
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -74,21 +71,16 @@ class VideosActivity : AppCompatActivity() {
                 Timber.tag(TAG).i("video.getId(): " + video.id)
                 Timber.tag(TAG).i("video.getTitle(): \"" + video.title + "\"")
 
-                var thumb: Bitmap?
                 val finalVideo = video
                 val videoView = ActivityVideosCoverViewBinding.inflate(layoutInflater, binding.gridLayoutVideos, false)
-                CoroutineScope(Dispatchers.IO).launch {
-                    val videoBytes = readVideoBytes(finalVideo.id) ?: return@launch
-                    Timber.tag(TAG).d("Extracting thumb for video id: " + finalVideo.id)
-                    thumb = this@VideosActivity.extractFirstFrameFromVideo(videoBytes)
+
+                videoViewModel.getThumb(finalVideo.id) { thumb ->
                     Timber.tag(TAG)
                         .d("thumb.w: " + thumb?.width + ". h: " + thumb?.height + ". videoID: " + finalVideo.id)
-                    withContext(Dispatchers.Main) {
-                        val coverImageView =
-                            videoView.coverImageView
-                        thumb?.let {
-                            Glide.with(this@VideosActivity).load(thumb).into(coverImageView)
-                        }
+                    val coverImageView =
+                        videoView.coverImageView
+                    thumb?.let {
+                        Glide.with(this@VideosActivity).load(thumb).into(coverImageView)
                     }
                 }
 
