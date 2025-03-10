@@ -20,4 +20,8 @@ jobs:
         distribution: temurin
         java-version: ${{ matrix.java }}
     - uses: gradle/gradle-build-action@v3
+
+    - name: Grant execute permission to Gradle wrapper
+      run: chmod +x ./gradlew
+
     - run: ./gradlew clean build
