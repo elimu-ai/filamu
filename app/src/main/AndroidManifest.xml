@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ai.elimu.filamu">
+
+    <!-- elimu.ai Content Provider (see https://github.com/elimu-ai/content-provider/blob/master/app/src/main/AndroidManifest.xml) -->
+<!--    <uses-permission android:name="${contentProviderApplicationId}.provider.READ" />-->
+
+    <!-- TODO: remove this request for permission once the Content Provider app can provide image files directly -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+<!--    <queries>-->
+<!--        <provider android:authorities="${contentProviderApplicationId}.provider.video_provider" />-->
+<!--    </queries>-->
+
+    <application
+        android:name=".BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.VideosActivity"
+            android:theme="@style/AppTheme.NoTitle.Fullscreen"
+            android:exported="false"/>
+
+        <activity
+            android:name=".ui.video.VideoActivity"
+            android:theme="@style/AppTheme.NoTitle.Fullscreen"
+            android:exported="false"/>
+    </application>
+</manifest>

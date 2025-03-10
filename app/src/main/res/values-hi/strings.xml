@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Filamu</string>
+    <string name="level">LEVEL %d</string>
+</resources>

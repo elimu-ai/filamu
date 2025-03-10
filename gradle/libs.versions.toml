@@ -1,0 +1,52 @@
+[versions]
+elimuModel = "model-2.0.83"
+elimuAnalytics = "3.1.27"
+elimuContentProvider = "1.2.29-SNAPSHOT-03"
+material = "1.12.0"
+junit = "4.13.2"
+flexbox = "3.0.0"
+glide = "4.16.0"
+
+constraintLayout = "2.2.1"
+appCompat = "1.7.0"
+androidXJunit = "1.2.1"
+androidXEspresso = "3.6.1"
+timber = "5.0.1"
+coreKtx = "1.9.0"
+coroutines = "1.10.1"
+hilt = "2.50"
+hiltAndroidPlugin = "2.48"
+androidLifecycle = "2.8.7"
+androidMedia3 = "1.6.0-beta01"
+androidGradlePlugin = "8.5.2"
+kotlinAndroidPlugin = "1.9.24"
+
+[libraries]
+elimu-model = { group = "com.github.elimu-ai", name = "model", version.ref = "elimuModel" }
+elimu-analytics = { group = "com.github.elimu-ai", name = "analytics", version.ref = "elimuAnalytics" }
+elimu-content-provider = { group = "ai.elimu.content_provider", name = "utils", version.ref = "elimuContentProvider" }
+flexbox = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexbox" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
+androidx-constraint-layout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidXJunit" }
+androidx-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidXEspresso" }
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "androidMedia3" }
+androidx-media3-exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "androidMedia3" }
+androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "androidMedia3" }
+androidx-media3-decoder = { group = "androidx.media3", name = "media3-decoder", version.ref = "androidMedia3" }
+androidx-view-model = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidLifecycle" }
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+[plugins]
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroidPlugin"}
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin"}
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroidPlugin"}
