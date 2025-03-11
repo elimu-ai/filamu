@@ -6,7 +6,6 @@ import ai.elimu.filamu.data.video.viewmodel.VideoViewModelImpl
 import ai.elimu.filamu.databinding.ActivityVideoBinding
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -65,7 +64,7 @@ class VideoActivity : AppCompatActivity() {
 
         videoViewModel.readVideoBytes(videoId) { bytes ->
             bytes ?: return@readVideoBytes
-            Timber.tag(TAG).d("videoBytes.length: " + bytes?.size)
+            Timber.tag(TAG).d("videoBytes.length: %s", bytes.size)
 
             // Create MediaSource from ByteArray
             val dataSourceFactory = ByteArrayDataSourceFactory(bytes)
@@ -79,13 +78,14 @@ class VideoActivity : AppCompatActivity() {
             videoPlayer.addListener(object : Player.Listener {
                 override fun onPlaybackStateChanged(playbackState: Int) {
                     super.onPlaybackStateChanged(playbackState)
-                    Log.v(TAG, "onPlaybackStateChanged: " + playbackState)
+                    Timber.tag(TAG).v("onPlaybackStateChanged: %s", playbackState)
                 }
 
                 override fun onPlayerError(error: PlaybackException) {
                     super.onPlayerError(error)
                     Timber.tag(TAG)
-                        .e("onPlayerError: " + error.errorCode + "\nmessage: " + error.message + "\ncause: " + error.cause)
+                        .e("onPlayerError: " + error.errorCode +
+                                "\nmessage: " + error.message + "\ncause: " + error.cause)
                 }
 
                 override fun onRenderedFirstFrame() {
