@@ -74,14 +74,10 @@ class VideosActivity : AppCompatActivity() {
                 val finalVideo = video
                 val videoView = ActivityVideosCoverViewBinding.inflate(layoutInflater, binding.gridLayoutVideos, false)
 
-                videoViewModel.getThumb(finalVideo.id) { thumb ->
-                    Timber.tag(TAG)
-                        .d("thumb.w: " + thumb?.width + ". h: " + thumb?.height + ". videoID: " + finalVideo.id)
+                videoViewModel.getThumbUrl(finalVideo) { thumbUrl ->
                     val coverImageView =
                         videoView.coverImageView
-                    thumb?.let {
-                        Glide.with(this@VideosActivity).load(thumb).into(coverImageView)
-                    }
+                    Glide.with(this@VideosActivity).load(thumbUrl).into(coverImageView)
                 }
 
                 val coverTitleTextView =
