@@ -18,6 +18,10 @@ class VideoViewModelImpl @Inject constructor(
     private val videoRepository: VideoRepository
 ): ViewModel(), VideoViewModel {
 
+    private val thumbBaseUrl: String by lazy {
+        "http://tha.elimu.ai/video/"
+    }
+
     override fun getAllVideos(onResult: (List<VideoGson>) -> Unit) {
         ioScope.launch {
             val videos = videoRepository.getVideos()
@@ -37,6 +41,19 @@ class VideoViewModelImpl @Inject constructor(
             }
             withContext(Dispatchers.Main) {
                 onResult.invoke(thumb)
+            }
+        }
+    }
+
+    override fun getThumbUrl(video: VideoGson, onResult: (String) -> Unit) {
+        ioScope.launch {
+            val thumbUrlBuilder = StringBuilder()
+            thumbUrlBuilder.append(thumbBaseUrl)
+                .append(video.id).append("_")
+                .append("r").append(video.revisionNumber)
+                .append("_thumbnail.png")
+            withContext(Dispatchers.Main) {
+                onResult.invoke(thumbUrlBuilder.toString())
             }
         }
     }

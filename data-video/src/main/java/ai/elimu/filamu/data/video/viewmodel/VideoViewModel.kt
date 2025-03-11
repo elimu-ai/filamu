@@ -6,5 +6,6 @@ import android.graphics.Bitmap
 interface VideoViewModel {
     fun getAllVideos(onResult: (List<VideoGson>) -> Unit)
     fun getThumb(videoId: Long, onResult: (Bitmap?) -> Unit)
+    fun getThumbUrl(video: VideoGson, onResult: (String) -> Unit)
     fun readVideoBytes(fileId: Long, onResult: (ByteArray?) -> Unit)
 }
