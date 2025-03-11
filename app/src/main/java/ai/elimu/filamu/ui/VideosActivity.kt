@@ -1,5 +1,7 @@
 package ai.elimu.filamu.ui
 
+import ai.elimu.analytics.utils.LearningEventUtil
+import ai.elimu.filamu.BuildConfig
 import ai.elimu.filamu.data.video.viewmodel.LoadVideosUiState
 import ai.elimu.filamu.data.video.viewmodel.VideoViewModel
 import ai.elimu.filamu.data.video.viewmodel.VideoViewModelImpl
@@ -7,6 +9,7 @@ import ai.elimu.filamu.databinding.ActivityVideosBinding
 import ai.elimu.filamu.databinding.ActivityVideosCoverViewBinding
 import ai.elimu.filamu.ui.video.VideoActivity
 import ai.elimu.filamu.util.SingleClickListener
+import ai.elimu.model.v2.enums.analytics.LearningEventType
 import ai.elimu.model.v2.gson.content.VideoGson
 import android.content.Intent
 import android.os.Bundle
@@ -114,6 +117,11 @@ class VideosActivity : AppCompatActivity() {
                             VideoActivity.EXTRA_KEY_VIDEO_ID,
                             finalVideo.id
                         )
+
+                        LearningEventUtil.reportVideoLearningEvent(
+                            video, LearningEventType.VIDEO_OPENED, this@VideosActivity,
+                            BuildConfig.ANALYTICS_APPLICATION_ID)
+
                         startActivity(intent)
                     }
                 })
