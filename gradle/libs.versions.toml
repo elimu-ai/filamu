@@ -4,7 +4,6 @@ elimuAnalytics = "3.1.28"
 elimuContentProvider = "1.2.30"
 material = "1.12.0"
 junit = "4.13.2"
-flexbox = "3.0.0"
 glide = "4.16.0"
 
 constraintLayout = "2.2.1"
@@ -24,7 +23,6 @@ kotlinAndroidPlugin = "2.0.0"
 elimu-model = { group = "com.github.elimu-ai", name = "model", version.ref = "elimuModel" }
 elimu-analytics = { group = "com.github.elimu-ai", name = "analytics", version.ref = "elimuAnalytics" }
 elimu-content-provider = { group = "com.github.elimu-ai", name = "content-provider", version.ref = "elimuContentProvider" }
-flexbox = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexbox" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
 androidx-constraint-layout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
@@ -38,9 +36,7 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "androidMedia3" }
-androidx-media3-exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "androidMedia3" }
 androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "androidMedia3" }
-androidx-media3-decoder = { group = "androidx.media3", name = "media3-decoder", version.ref = "androidMedia3" }
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinAndroidPlugin" }
 
