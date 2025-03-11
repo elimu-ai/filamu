@@ -27,7 +27,6 @@
 
         <activity
             android:name=".ui.VideosActivity"
-            android:theme="@style/AppTheme.NoTitle.Fullscreen"
             android:exported="false"/>
 
         <activity
