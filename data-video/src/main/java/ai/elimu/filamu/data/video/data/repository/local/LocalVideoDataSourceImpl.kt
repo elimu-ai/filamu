@@ -51,30 +51,21 @@ class LocalVideoDataSourceImpl @Inject constructor(
     }
 
     override suspend fun extractFirstFrameFromVideo(videoBytes: ByteArray): Bitmap? {
-        try {
-            // Step 1: Save the ByteArray to a temporary file
-            val tempFile = File.createTempFile("temp_video", ".mp4", context.cacheDir)
+        var tempFile: File? = null
+        return try {
+            tempFile = File.createTempFile("temp_video", ".mp4", context.cacheDir)
             FileOutputStream(tempFile).use { it.write(videoBytes) }
-
-            // Step 2: Use MediaMetadataRetriever to extract the first frame
             val retriever = MediaMetadataRetriever()
             retriever.setDataSource(tempFile.absolutePath)
-
-            // Step 3: Get frame at the first millisecond (0 ms)
             val bitmap = retriever.getFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
-
-            // Release resources
             retriever.release()
-
-            // Delete the temp file
-            tempFile.delete()
-
-            return bitmap
+            bitmap
         } catch (e: Exception) {
-            Timber.tag("extractFirstFrameFromVideo")
-                .e("exception: " + e.message)
+            Timber.tag("extractFirstFrameFromVideo").e("exception: " + e.message)
             e.printStackTrace()
+            null
+        } finally {
+            tempFile?.delete()
         }
-        return null
     }
 }
