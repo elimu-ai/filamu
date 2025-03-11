@@ -46,6 +46,8 @@ dependencies {
 
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
+    implementation libs.androidx.lifecycle.viewmodel
+    implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.material
     implementation libs.elimu.model
     implementation libs.elimu.content.provider

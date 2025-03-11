@@ -1,5 +1,6 @@
 package ai.elimu.filamu.ui
 
+import ai.elimu.filamu.data.video.viewmodel.LoadVideosUiState
 import ai.elimu.filamu.data.video.viewmodel.VideoViewModel
 import ai.elimu.filamu.data.video.viewmodel.VideoViewModelImpl
 import ai.elimu.filamu.databinding.ActivityVideosBinding
@@ -11,7 +12,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -36,6 +40,7 @@ class VideosActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initViewModels()
+        initData()
     }
 
     override fun onStart() {
@@ -46,8 +51,6 @@ class VideosActivity : AppCompatActivity() {
         binding.videosProgressBar.visibility = View.VISIBLE
         binding.gridLayoutVideos.visibility = View.GONE
         binding.gridLayoutVideos.removeAllViews()
-
-        initData()
     }
 
     private fun initViewModels() {
@@ -55,9 +58,23 @@ class VideosActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        videoViewModel.getAllVideos { videos ->
-            Timber.tag(TAG).i("videos.size(): " + videos.size)
-            showVideos(videos)
+        videoViewModel.getAllVideos()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                videoViewModel.uiState.collect { uiState ->
+                    Timber.tag(TAG).d("uiState collected uiState: $uiState")
+                    when (uiState) {
+                        is LoadVideosUiState.Loading ->
+                            binding.videosProgressBar.visibility = View.VISIBLE
+
+                        is LoadVideosUiState.Success -> {
+                            binding.videosProgressBar.visibility = View.GONE
+                            showVideos(uiState.videos)
+                        }
+                    }
+                }
+            }
         }
     }
 

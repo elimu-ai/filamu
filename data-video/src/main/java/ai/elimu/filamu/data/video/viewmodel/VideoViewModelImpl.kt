@@ -8,6 +8,9 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -22,12 +25,14 @@ class VideoViewModelImpl @Inject constructor(
         "http://tha.elimu.ai/video/"
     }
 
-    override fun getAllVideos(onResult: (List<VideoGson>) -> Unit) {
+    private val _uiState = MutableStateFlow<LoadVideosUiState>(LoadVideosUiState.Loading)
+    override val uiState: StateFlow<LoadVideosUiState> = _uiState.asStateFlow()
+
+    override fun getAllVideos() {
         ioScope.launch {
+            _uiState.emit(LoadVideosUiState.Loading)
             val videos = videoRepository.getVideos()
-            withContext(Dispatchers.Main) {
-                onResult(videos)
-            }
+            _uiState.emit(LoadVideosUiState.Success(videos))
         }
     }
 
