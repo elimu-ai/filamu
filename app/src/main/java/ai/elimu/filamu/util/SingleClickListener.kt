@@ -19,7 +19,7 @@ abstract class SingleClickListener : View.OnClickListener {
     abstract fun onSingleClick(v: View?)
 
     companion object {
-        private const val DOUBLE_CLICK_INTERVAL: Long = 2000
+        private const val DOUBLE_CLICK_INTERVAL: Long = 500
 
         private var mLastClickTime: Long = 0
     }
