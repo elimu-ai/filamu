@@ -36,3 +36,6 @@ data-video/build/
 # IntelliJ
 *.iml
 .idea
+
+# Kotlin
+.kotlin/
