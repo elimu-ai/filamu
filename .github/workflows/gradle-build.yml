@@ -24,4 +24,33 @@ jobs:
     - name: Grant execute permission to Gradle wrapper
       run: chmod +x ./gradlew
 
-    - run: ./gradlew clean build
+    - run: ./gradlew clean app:assembleRelease
+
+    - name: Extract Version Code (MacOS)
+      if: runner.os == 'macOS'
+      run: |
+        javaVersion=$(java -version 2>&1 | head -n 1 | sed -E 's/.*"([0-9]+\.[0-9]+)\..*/\1/')
+        echo "VERSION_CODE=$(grep -Eo 'versionCode\s+[0-9]+' app/build.gradle | grep -Eo '[0-9]+')" >> $GITHUB_ENV
+        echo "JAVA_VERSION=$javaVersion" >> $GITHUB_ENV
+        echo "APP_ID=$(awk '/applicationId/ {gsub(/"/, "", $2); print $2; exit}' app/build.gradle)" >> $GITHUB_ENV
+        echo "Version code is: $VERSION_CODE"
+        echo "Java version: $JAVA_VERSION"
+
+    - name: Validate versions
+      if: ${{ runner.os == 'macOS'}}
+      run: |
+        echo "Validate Version code is: $VERSION_CODE"
+        echo "Validate Java version: $JAVA_VERSION"
+        if [ "$JAVA_VERSION" != "17.0" ]; then
+            echo "Java version is not 17, skipping the upload."
+            echo "UPLOAD_ARTIFACT=false" >> $GITHUB_ENV
+          else
+            echo "UPLOAD_ARTIFACT=true" >> $GITHUB_ENV
+        fi
+
+    - name: Upload release APK
+      if: ${{ runner.os == 'macOS'  && env.UPLOAD_ARTIFACT == 'true'}}
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-apk
+        path: ./app/build/outputs/apk/release/${{ env.APP_ID }}-${{ env.VERSION_CODE }}-release.apk
