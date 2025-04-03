@@ -56,6 +56,7 @@ dependencies {
     implementation libs.elimu.model // See https://jitpack.io/#elimu-ai/model
     implementation libs.elimu.content.provider // See https://jitpack.io/#elimu-ai/content-provider
     implementation libs.elimu.analytics // See https://jitpack.io/#elimu-ai/analytics
+    implementation libs.elimu.common.utils
 
     implementation libs.androidx.appcompat
     implementation libs.material

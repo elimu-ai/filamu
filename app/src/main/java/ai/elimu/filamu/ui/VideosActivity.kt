@@ -1,7 +1,10 @@
 package ai.elimu.filamu.ui
 
 import ai.elimu.analytics.utils.LearningEventUtil
+import ai.elimu.common.utils.ui.setLightStatusBar
+import ai.elimu.common.utils.ui.setStatusBarColorCompat
 import ai.elimu.filamu.BuildConfig
+import ai.elimu.filamu.R
 import ai.elimu.filamu.data.video.viewmodel.LoadVideosUiState
 import ai.elimu.filamu.data.video.viewmodel.VideoViewModel
 import ai.elimu.filamu.data.video.viewmodel.VideoViewModelImpl
@@ -41,6 +44,11 @@ class VideosActivity : AppCompatActivity() {
 
         initViewModels()
         initData()
+
+        window.apply {
+            setLightStatusBar()
+            setStatusBarColorCompat(R.color.colorPrimaryDark)
+        }
     }
 
     override fun onStart() {
