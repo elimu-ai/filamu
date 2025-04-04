@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/green_lighten_1</color>
-    <color name="colorPrimaryDark">@color/green</color>
-    <color name="colorAccent">@color/green_accent_1</color>
+    <color name="colorPrimary">@color/deep_purple_darken_4</color>
+    <color name="colorPrimaryDark">@color/deep_purple_darken_3</color>
+    <color name="colorAccent">@color/deep_purple_darken_2</color>
 
     <color name="blue_grey">#455A64</color>
     <color name="red">#F44336</color>
@@ -14,6 +14,8 @@
     <color name="deep_purple">#673AB7</color>
     <color name="deep_purple_darken_1">#5E35B1</color>
     <color name="deep_purple_darken_2">#512DA8</color>
+    <color name="deep_purple_darken_3">#4527A0</color>
+    <color name="deep_purple_darken_4">#311B92</color>
     <color name="indigo">#3F51B5</color>
     <color name="blue">#2196F3</color>
     <color name="light_blue">#03A9F4</color>
