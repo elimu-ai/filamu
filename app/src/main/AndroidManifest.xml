@@ -3,6 +3,7 @@
     package="ai.elimu.filamu">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="${contentProviderApplicationId}.provider.READ" />
 
     <application
         android:name=".BaseApplication"
