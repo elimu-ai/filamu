@@ -14,9 +14,6 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Grant execute permission to Gradle wrapper
-      run: chmod +x ./gradlew
-
     - run: ./gradlew clean app:assembleRelease
 
     - name: Extract Version Code
@@ -28,5 +25,5 @@ jobs:
     - name: Upload release APK
       uses: actions/upload-artifact@v4
       with:
-        name: release-apk
+        name: release-apk.apk
         path: ./app/build/outputs/apk/release/${{ env.APP_ID }}-${{ env.VERSION_CODE }}-release.apk
