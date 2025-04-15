@@ -16,7 +16,7 @@ coreKtx = "1.15.0"
 coroutines = "1.10.2"
 lifecycle = "2.8.7"
 hilt = "2.56.1"
-androidMedia3 = "1.6.0"
+androidMedia3 = "1.6.1"
 androidGradlePlugin = "8.9.1"
 kotlinAndroidPlugin = "2.1.20"
 
