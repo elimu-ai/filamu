@@ -4,10 +4,7 @@ name: Gradle Release
 #  workflow_dispatch:
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   release:
