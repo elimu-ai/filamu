@@ -30,9 +30,20 @@ jobs:
         echo "VERSION_NAME=$(awk '/versionName/ { gsub(/'\''/, "", $2); gsub(/-SNAPSHOT/, "", $2); print $2; exit }' app/build.gradle)" >> $GITHUB_ENV
         echo "Version name is: $VERSION_NAME"
 
+    - run: git config user.name 'Nya Ξlimu'
+    - run: git config user.email 'info@elimu.ai'
+
+    - name: Create new Git tag
+      run: |
+        git tag v${{ env.VERSION_NAME }}
+        git push origin v${{ env.VERSION_NAME }}
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
     - name: Upload APK to Release
       uses: softprops/action-gh-release@v2
       with:
+        tag_name: '${{ env.VERSION_NAME }}'
         files: ./app/build/outputs/apk/release/${{ env.APP_ID }}-${{ env.VERSION_CODE }}-release.apk
       env:
         GITHUB_TOKEN: ${{ github.token }}
