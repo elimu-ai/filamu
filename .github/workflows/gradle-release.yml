@@ -27,6 +27,8 @@ jobs:
         echo "VERSION_CODE=$(grep -Eo 'versionCode\s+[0-9]+' app/build.gradle | grep -Eo '[0-9]+')" >> $GITHUB_ENV
         echo "APP_ID=$(awk '/applicationId/ {gsub(/"/, "", $2); print $2; exit}' app/build.gradle)" >> $GITHUB_ENV
         echo "Version code is: $VERSION_CODE"
+        echo "VERSION_NAME=$(awk '/versionName/ { gsub(/'\''/, "", $2); gsub(/-SNAPSHOT/, "", $2); print $2; exit }' app/build.gradle)" >> $GITHUB_ENV
+        echo "Version name is: $VERSION_NAME"
 
     - name: Upload APK to Release
       uses: softprops/action-gh-release@v2
