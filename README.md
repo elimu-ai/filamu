@@ -14,6 +14,11 @@ Literacy skills:
 
 If you want to make changes to the elimu.ai Content Provider's utility library, see testing instructions at https://github.com/elimu-ai/content-provider/blob/main/README.md#utils-snapshot
 
+### How to release a new version?
+
+1. Update versionCode, versionName in `app/build.gradle` file by increment either major/minor/patch number and merge to `main`
+2. Trigger [`Release`](https://github.com/elimu-ai/filamu/actions/workflows/gradle-release.yml) task in Github Actions on `main` branch
+
 ---
 
 <p align="center">
