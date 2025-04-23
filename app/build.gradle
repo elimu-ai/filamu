@@ -53,9 +53,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':data-video')
-    implementation libs.elimu.model // See https://jitpack.io/#elimu-ai/model
-    implementation libs.elimu.content.provider // See https://jitpack.io/#elimu-ai/content-provider
-    implementation libs.elimu.analytics // See https://jitpack.io/#elimu-ai/analytics
+    implementation libs.elimu.model // https://jitpack.io/#ai.elimu/model
+    implementation libs.elimu.content.provider // https://jitpack.io/#ai.elimu/content-provider
+    implementation libs.elimu.analytics // https://jitpack.io/#ai.elimu/analytics
     implementation libs.elimu.common.utils
 
     implementation libs.androidx.appcompat

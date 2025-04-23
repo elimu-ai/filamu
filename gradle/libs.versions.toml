@@ -1,8 +1,8 @@
 [versions]
 elimuModel = "model-2.0.97"
 elimuAnalytics = "3.1.30"
-elimuContentProvider = "1.2.38"
-elimuCommonUtils = "1.0.10"
+elimuContentProvider = "1.2.39"
+elimuCommonUtils = "1.0.11"
 material = "1.12.0"
 junit = "4.13.2"
 glide = "4.16.0"
@@ -21,10 +21,10 @@ androidGradlePlugin = "8.8.1"
 kotlinAndroidPlugin = "2.1.20"
 
 [libraries]
-elimu-model = { group = "com.github.elimu-ai", name = "model", version.ref = "elimuModel" }
-elimu-analytics = { group = "com.github.elimu-ai", name = "analytics", version.ref = "elimuAnalytics" }
-elimu-content-provider = { group = "com.github.elimu-ai", name = "content-provider", version.ref = "elimuContentProvider" }
-elimu-common-utils = { group = "com.github.elimu-ai", name = "common-utils", version.ref = "elimuCommonUtils" }
+elimu-model = { group = "ai.elimu", name = "model", version.ref = "elimuModel" }
+elimu-analytics = { group = "ai.elimu", name = "analytics", version.ref = "elimuAnalytics" }
+elimu-content-provider = { group = "ai.elimu", name = "content-provider", version.ref = "elimuContentProvider" }
+elimu-common-utils = { group = "ai.elimu", name = "common-utils", version.ref = "elimuCommonUtils" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
 androidx-constraint-layout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
