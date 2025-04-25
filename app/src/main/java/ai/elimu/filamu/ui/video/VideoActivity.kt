@@ -9,6 +9,7 @@ import android.os.Bundle
 import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MimeTypes
 import androidx.media3.common.PlaybackException
@@ -19,6 +20,9 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -29,6 +33,7 @@ class VideoActivity : AppCompatActivity() {
     private lateinit var videoPlayer: ExoPlayer
     private lateinit var binding: ActivityVideoBinding
     private lateinit var videoViewModel: VideoViewModel
+    private var synchronizationJob: Job? = null
 
     @OptIn(UnstableApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +41,6 @@ class VideoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityVideoBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
         initViewModels()
@@ -92,7 +96,6 @@ class VideoActivity : AppCompatActivity() {
                     super.onRenderedFirstFrame()
                     Timber.tag(TAG).d("onRenderedFirstFrame")
                 }
-
             })
 
             // Prepare and play
@@ -101,10 +104,35 @@ class VideoActivity : AppCompatActivity() {
             videoPlayer.prepare()
             videoPlayer.play()
         }
+
+        // Load subtitles
+        videoViewModel.loadSubtitles("sample.srt")
+
+        // Synchronize subtitles with video playback
+        videoPlayer.addListener(object : Player.Listener {
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                if (playbackState == Player.STATE_READY) {
+                    synchronizeSubtitles()
+                }
+            }
+        })
+    }
+
+    private fun synchronizeSubtitles() {
+        synchronizationJob?.cancel()
+        synchronizationJob = lifecycleScope.launch {
+            while (true) {
+                val currentPosition = videoPlayer.currentPosition
+                val subtitle = videoViewModel.getCurrentSubtitle(currentPosition)
+                binding.subtitleTextView.text = subtitle?.text ?: ""
+                delay(500) // Check subtitle updates every 500ms
+            }
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        synchronizationJob?.cancel()
         videoPlayer.release()
     }
 
