@@ -1,3 +1,3 @@
+rootProject.name = "Filamu"
 include ':app'
-rootProject.name = "filamu"
 include ':data-video'

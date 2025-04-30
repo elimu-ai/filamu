@@ -1,8 +1,12 @@
-# Filamu 🎬
-
 [![](https://jitpack.io/v/ai.elimu/filamu.svg)](https://jitpack.io/#ai.elimu/filamu)
 
+# Filamu 🎬
+
 Android app for watching videos.
+
+Literacy skills:
+* [`LETTER_IDENTIFICATION`](https://github.com/elimu-ai/wiki/blob/main/literacy-skills/LETTER_IDENTIFICATION.md)
+* [`FAMILIAR_WORD_READING`](https://github.com/elimu-ai/wiki/blob/main/literacy-skills/FAMILIAR_WORD_READING.md)
 
 ## Development
 
