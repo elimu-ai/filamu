@@ -7,13 +7,13 @@ import android.app.Application
 import android.content.ContentUris
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
-import android.net.Uri
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 class LocalVideoDataSourceImpl @Inject constructor(
     private val context: Application
@@ -26,8 +26,8 @@ class LocalVideoDataSourceImpl @Inject constructor(
     }
 
     override suspend fun readVideoBytes(fileId: Long): ByteArray? {
-        val uri = Uri.parse("content://" + BuildConfig.CONTENT_PROVIDER_APPLICATION_ID
-                + ".provider.video_provider/videos/")
+        val uri = ("content://" + BuildConfig.CONTENT_PROVIDER_APPLICATION_ID
+                + ".provider.video_provider/videos/").toUri()
 
         val videoUri = ContentUris.withAppendedId(uri, fileId)
 
