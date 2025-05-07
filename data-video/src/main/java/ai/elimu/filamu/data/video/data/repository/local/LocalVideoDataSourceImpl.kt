@@ -45,7 +45,7 @@ class LocalVideoDataSourceImpl @Inject constructor(
             }
         } catch (e: IOException) {
             e.printStackTrace()
-            Timber.tag("readVideoBytes").e("exception: " + e.message)
+            Timber.tag("readVideoBytes").e("exception: %s", e.message)
             return null
         }
     }
@@ -61,7 +61,7 @@ class LocalVideoDataSourceImpl @Inject constructor(
             retriever.release()
             bitmap
         } catch (e: Exception) {
-            Timber.tag("extractFirstFrameFromVideo").e("exception: " + e.message)
+            Timber.tag("extractFirstFrameFromVideo").e("exception: %s", e.message)
             e.printStackTrace()
             null
         } finally {
