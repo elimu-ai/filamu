@@ -1,5 +1,3 @@
-[![](https://jitpack.io/v/ai.elimu/filamu.svg)](https://jitpack.io/#ai.elimu/filamu)
-
 # Filamu 🎬
 
 Android app for watching videos.
