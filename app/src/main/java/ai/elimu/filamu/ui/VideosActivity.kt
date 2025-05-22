@@ -109,8 +109,7 @@ class VideosActivity : AppCompatActivity() {
                 override fun onSingleClick(v: View?) {
                     Timber.tag(TAG).i("onClick")
 
-                    Timber.tag(TAG).i("video.getId(): " + video.id
-                            + ". Title: " + video.title)
+                    Timber.tag(TAG).i("video.getId(): ${video.id}. Title: ${video.title}")
 
                     val intent = Intent(applicationContext, VideoActivity::class.java)
                     intent.putExtra(

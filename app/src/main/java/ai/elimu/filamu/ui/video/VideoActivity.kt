@@ -84,8 +84,7 @@ class VideoActivity : AppCompatActivity() {
                 override fun onPlayerError(error: PlaybackException) {
                     super.onPlayerError(error)
                     Timber.tag(TAG)
-                        .e("onPlayerError: " + error.errorCode +
-                                "\nmessage: " + error.message + "\ncause: " + error.cause)
+                        .e("onPlayerError: ${error.errorCode}\nmessage: ${error.message}\ncause: ${error.cause}")
                 }
 
                 override fun onRenderedFirstFrame() {
