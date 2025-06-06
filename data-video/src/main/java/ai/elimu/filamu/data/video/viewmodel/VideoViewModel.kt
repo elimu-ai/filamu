@@ -26,8 +26,11 @@ sealed interface LoadVideosUiState {
 
 interface VideoViewModel {
     val uiState: StateFlow<LoadVideosUiState>
+    val subtitles: StateFlow<List<ai.elimu.filamu.ui.video.model.Subtitle>>
     fun getAllVideos()
     fun getThumb(videoId: Long, onResult: (Bitmap?) -> Unit)
     fun getThumbUrl(video: VideoGson, onResult: (String) -> Unit)
     fun readVideoBytes(fileId: Long, onResult: (ByteArray?) -> Unit)
+    fun loadSubtitles(fileName: String)
+    fun getCurrentSubtitle(currentPosition: Long): ai.elimu.filamu.ui.video.model.Subtitle?
 }
