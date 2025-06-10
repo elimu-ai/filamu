@@ -1,9 +1,13 @@
 package ai.elimu.filamu.ui.video
 
+import ai.elimu.analytics.utils.LearningEventUtil
+import ai.elimu.filamu.BuildConfig
 import ai.elimu.filamu.data.ByteArrayDataSourceFactory
 import ai.elimu.filamu.data.video.viewmodel.VideoViewModel
 import ai.elimu.filamu.data.video.viewmodel.VideoViewModelImpl
 import ai.elimu.filamu.databinding.ActivityVideoBinding
+import ai.elimu.model.v2.enums.analytics.LearningEventType
+import ai.elimu.model.v2.gson.content.VideoGson
 import android.net.Uri
 import android.os.Bundle
 import androidx.annotation.OptIn
@@ -79,6 +83,16 @@ class VideoActivity : AppCompatActivity() {
                 override fun onPlaybackStateChanged(playbackState: Int) {
                     super.onPlaybackStateChanged(playbackState)
                     Timber.tag(TAG).v("onPlaybackStateChanged: %s", playbackState)
+
+                    if (playbackState == Player.STATE_ENDED) {
+                        val videoTitle = intent.getStringExtra(EXTRA_KEY_VIDEO_TITLE)
+                        LearningEventUtil.reportVideoLearningEvent(
+                            VideoGson().apply {
+                                id = videoId
+                                title = videoTitle
+                            }, LearningEventType.VIDEO_COMPLETED, this@VideoActivity,
+                            BuildConfig.ANALYTICS_APPLICATION_ID)
+                    }
                 }
 
                 override fun onPlayerError(error: PlaybackException) {
@@ -113,5 +127,6 @@ class VideoActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_KEY_VIDEO_ID: String = "extra_key_video_id"
+        const val EXTRA_KEY_VIDEO_TITLE = "extra_key_video_title"
     }
 }
