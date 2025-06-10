@@ -116,6 +116,7 @@ class VideosActivity : AppCompatActivity() {
                         VideoActivity.EXTRA_KEY_VIDEO_ID,
                         video.id
                     )
+                    intent.putExtra(VideoActivity.EXTRA_KEY_VIDEO_TITLE, video.title)
 
                     LearningEventUtil.reportVideoLearningEvent(
                         video, LearningEventType.VIDEO_OPENED, this@VideosActivity,
