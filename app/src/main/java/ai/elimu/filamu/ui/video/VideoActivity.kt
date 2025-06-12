@@ -33,6 +33,9 @@ class VideoActivity : AppCompatActivity() {
     private lateinit var videoPlayer: ExoPlayer
     private lateinit var binding: ActivityVideoBinding
     private lateinit var videoViewModel: VideoViewModel
+    private var videoId: Long = 0L
+    private var videoTitle: String = ""
+    private var isVideoPlaybackCompleted = false
 
     @OptIn(UnstableApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +48,7 @@ class VideoActivity : AppCompatActivity() {
 
         initViewModels()
 
-        val videoId = intent.getLongExtra(EXTRA_KEY_VIDEO_ID, 0)
+        videoId = intent.getLongExtra(EXTRA_KEY_VIDEO_ID, 0)
         Timber.tag(TAG).i("videoId: $videoId")
 
         val renderersFactory = DefaultRenderersFactory(this).setEnableDecoderFallback(true)
@@ -85,13 +88,14 @@ class VideoActivity : AppCompatActivity() {
                     Timber.tag(TAG).v("onPlaybackStateChanged: %s", playbackState)
 
                     if (playbackState == Player.STATE_ENDED) {
-                        val videoTitle = intent.getStringExtra(EXTRA_KEY_VIDEO_TITLE)
+                        videoTitle = intent.getStringExtra(EXTRA_KEY_VIDEO_TITLE) ?: ""
                         LearningEventUtil.reportVideoLearningEvent(
                             VideoGson().apply {
                                 id = videoId
                                 title = videoTitle
                             }, LearningEventType.VIDEO_COMPLETED, this@VideoActivity,
                             BuildConfig.ANALYTICS_APPLICATION_ID)
+                        isVideoPlaybackCompleted = true
                     }
                 }
 
@@ -119,6 +123,15 @@ class VideoActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         videoPlayer.release()
+        if (!isVideoPlaybackCompleted) {
+            LearningEventUtil.reportVideoLearningEvent(
+                VideoGson().apply {
+                    id = videoId
+                    title = videoTitle
+                }, LearningEventType.VIDEO_CLOSED_BEFORE_COMPLETION, this@VideoActivity,
+                BuildConfig.ANALYTICS_APPLICATION_ID)
+        }
+
     }
 
     private fun initViewModels() {
