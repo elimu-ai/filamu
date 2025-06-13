@@ -23,6 +23,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONObject
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -89,11 +90,15 @@ class VideoActivity : AppCompatActivity() {
 
                     if (playbackState == Player.STATE_ENDED) {
                         videoTitle = intent.getStringExtra(EXTRA_KEY_VIDEO_TITLE) ?: ""
+                        val extraData = JSONObject().apply {
+                            put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.duration)
+                        }
                         LearningEventUtil.reportVideoLearningEvent(
                             videoGson = VideoGson().apply {
                                 id = videoId
                                 title = videoTitle
                             },
+                            additionalData = extraData,
                             learningEventType = LearningEventType.VIDEO_COMPLETED,
                             context = this@VideoActivity,
                             analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
@@ -124,18 +129,23 @@ class VideoActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        videoPlayer.release()
+
         if (!isVideoPlaybackCompleted) {
+            val extraData = JSONObject().apply {
+                put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.currentPosition)
+            }
             LearningEventUtil.reportVideoLearningEvent(
                 videoGson = VideoGson().apply {
                     id = videoId
                     title = videoTitle
                 },
+                additionalData = extraData,
                 learningEventType = LearningEventType.VIDEO_CLOSED_BEFORE_COMPLETION,
                 context = this@VideoActivity,
                 analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
         }
 
+        videoPlayer.release()
     }
 
     private fun initViewModels() {
@@ -145,5 +155,7 @@ class VideoActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_KEY_VIDEO_ID: String = "extra_key_video_id"
         const val EXTRA_KEY_VIDEO_TITLE = "extra_key_video_title"
+
+        private const val ANALYTICS_PLAYBACK_POSITION = "video_playback_position_ms"
     }
 }
