@@ -119,8 +119,10 @@ class VideosActivity : AppCompatActivity() {
                     intent.putExtra(VideoActivity.EXTRA_KEY_VIDEO_TITLE, video.title)
 
                     LearningEventUtil.reportVideoLearningEvent(
-                        video, LearningEventType.VIDEO_OPENED, this@VideosActivity,
-                        BuildConfig.ANALYTICS_APPLICATION_ID)
+                        videoGson = video,
+                        learningEventType = LearningEventType.VIDEO_OPENED,
+                        context = this@VideosActivity,
+                        analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
 
                     startActivity(intent)
                 }
