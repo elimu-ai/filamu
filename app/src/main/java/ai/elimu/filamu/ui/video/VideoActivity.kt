@@ -90,11 +90,13 @@ class VideoActivity : AppCompatActivity() {
                     if (playbackState == Player.STATE_ENDED) {
                         videoTitle = intent.getStringExtra(EXTRA_KEY_VIDEO_TITLE) ?: ""
                         LearningEventUtil.reportVideoLearningEvent(
-                            VideoGson().apply {
+                            videoGson = VideoGson().apply {
                                 id = videoId
                                 title = videoTitle
-                            }, LearningEventType.VIDEO_COMPLETED, this@VideoActivity,
-                            BuildConfig.ANALYTICS_APPLICATION_ID)
+                            },
+                            learningEventType = LearningEventType.VIDEO_COMPLETED,
+                            context = this@VideoActivity,
+                            analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
                         isVideoPlaybackCompleted = true
                     }
                 }
@@ -125,11 +127,13 @@ class VideoActivity : AppCompatActivity() {
         videoPlayer.release()
         if (!isVideoPlaybackCompleted) {
             LearningEventUtil.reportVideoLearningEvent(
-                VideoGson().apply {
+                videoGson = VideoGson().apply {
                     id = videoId
                     title = videoTitle
-                }, LearningEventType.VIDEO_CLOSED_BEFORE_COMPLETION, this@VideoActivity,
-                BuildConfig.ANALYTICS_APPLICATION_ID)
+                },
+                learningEventType = LearningEventType.VIDEO_CLOSED_BEFORE_COMPLETION,
+                context = this@VideoActivity,
+                analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
         }
 
     }
