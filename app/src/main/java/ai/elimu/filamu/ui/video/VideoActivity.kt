@@ -152,6 +152,11 @@ class VideoActivity : AppCompatActivity() {
         videoViewModel = ViewModelProvider(this)[VideoViewModelImpl::class.java]
     }
 
+    override fun onPause() {
+        super.onPause()
+        videoPlayer.pause()
+    }
+
     companion object {
         const val EXTRA_KEY_VIDEO_ID: String = "extra_key_video_id"
         const val EXTRA_KEY_VIDEO_TITLE = "extra_key_video_title"
