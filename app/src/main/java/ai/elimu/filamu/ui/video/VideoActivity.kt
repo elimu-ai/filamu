@@ -90,16 +90,15 @@ class VideoActivity : AppCompatActivity() {
 
                     if (playbackState == Player.STATE_ENDED) {
                         videoTitle = intent.getStringExtra(EXTRA_KEY_VIDEO_TITLE) ?: ""
-                        val extraData = JSONObject().apply {
-                            put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.duration)
-                        }
                         LearningEventUtil.reportVideoLearningEvent(
                             videoGson = VideoGson().apply {
                                 id = videoId
                                 title = videoTitle
                             },
-                            additionalData = extraData,
-                            learningEventType = LearningEventType.VIDEO_COMPLETED,
+                            additionalData = JSONObject().apply {
+                                put("eventType", LearningEventType.VIDEO_COMPLETED)
+                                put("video_playback_position_ms", videoPlayer.duration)
+                            },
                             context = this@VideoActivity,
                             analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
                         isVideoPlaybackCompleted = true
@@ -131,16 +130,15 @@ class VideoActivity : AppCompatActivity() {
         super.onDestroy()
 
         if (!isVideoPlaybackCompleted) {
-            val extraData = JSONObject().apply {
-                put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.currentPosition)
-            }
             LearningEventUtil.reportVideoLearningEvent(
                 videoGson = VideoGson().apply {
                     id = videoId
                     title = videoTitle
                 },
-                additionalData = extraData,
-                learningEventType = LearningEventType.VIDEO_CLOSED_BEFORE_COMPLETION,
+                additionalData = JSONObject().apply {
+                    put("eventType", LearningEventType.VIDEO_CLOSED_BEFORE_COMPLETION)
+                    put("video_playback_position_ms", videoPlayer.currentPosition)
+                },
                 context = this@VideoActivity,
                 analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
         }
@@ -155,7 +153,5 @@ class VideoActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_KEY_VIDEO_ID: String = "extra_key_video_id"
         const val EXTRA_KEY_VIDEO_TITLE = "extra_key_video_title"
-
-        private const val ANALYTICS_PLAYBACK_POSITION = "video_playback_position_ms"
     }
 }
