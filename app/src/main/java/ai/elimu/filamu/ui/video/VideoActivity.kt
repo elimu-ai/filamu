@@ -1,5 +1,6 @@
 package ai.elimu.filamu.ui.video
 
+import ai.elimu.analytics.utils.BundleKeys
 import ai.elimu.analytics.utils.LearningEventUtil
 import ai.elimu.filamu.BuildConfig
 import ai.elimu.filamu.data.ByteArrayDataSourceFactory
@@ -49,7 +50,7 @@ class VideoActivity : AppCompatActivity() {
 
         initViewModels()
 
-        videoId = intent.getLongExtra(EXTRA_KEY_VIDEO_ID, 0)
+        videoId = intent.getLongExtra(BundleKeys.KEY_VIDEO_ID, 0)
         Timber.tag(TAG).i("videoId: $videoId")
 
         val renderersFactory = DefaultRenderersFactory(this).setEnableDecoderFallback(true)
@@ -89,7 +90,7 @@ class VideoActivity : AppCompatActivity() {
                     Timber.tag(TAG).v("onPlaybackStateChanged: %s", playbackState)
 
                     if (playbackState == Player.STATE_ENDED) {
-                        videoTitle = intent.getStringExtra(EXTRA_KEY_VIDEO_TITLE) ?: ""
+                        videoTitle = intent.getStringExtra(BundleKeys.KEY_VIDEO_TITLE) ?: ""
                         val extraData = JSONObject().apply {
                             put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.duration)
                         }
@@ -158,9 +159,6 @@ class VideoActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_KEY_VIDEO_ID: String = "extra_key_video_id"
-        const val EXTRA_KEY_VIDEO_TITLE = "extra_key_video_title"
-
         private const val ANALYTICS_PLAYBACK_POSITION = "video_playback_position_ms"
     }
 }

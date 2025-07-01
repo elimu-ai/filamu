@@ -1,5 +1,6 @@
 package ai.elimu.filamu.ui
 
+import ai.elimu.analytics.utils.BundleKeys
 import ai.elimu.analytics.utils.LearningEventUtil
 import ai.elimu.common.utils.ui.setLightStatusBar
 import ai.elimu.common.utils.ui.setStatusBarColorCompat
@@ -113,10 +114,10 @@ class VideosActivity : AppCompatActivity() {
 
                     val intent = Intent(applicationContext, VideoActivity::class.java)
                     intent.putExtra(
-                        VideoActivity.EXTRA_KEY_VIDEO_ID,
+                        BundleKeys.KEY_VIDEO_ID,
                         video.id
                     )
-                    intent.putExtra(VideoActivity.EXTRA_KEY_VIDEO_TITLE, video.title)
+                    intent.putExtra(BundleKeys.KEY_VIDEO_TITLE, video.title)
 
                     LearningEventUtil.reportVideoLearningEvent(
                         videoGson = video,
