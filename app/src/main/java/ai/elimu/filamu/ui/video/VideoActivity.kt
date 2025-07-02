@@ -91,9 +91,6 @@ class VideoActivity : AppCompatActivity() {
 
                     if (playbackState == Player.STATE_ENDED) {
                         videoTitle = intent.getStringExtra(BundleKeys.KEY_VIDEO_TITLE) ?: ""
-                        val extraData = JSONObject().apply {
-                            put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.duration)
-                        }
                         LearningEventUtil.reportVideoLearningEvent(
                             videoGson = VideoGson().apply {
                                 id = videoId
