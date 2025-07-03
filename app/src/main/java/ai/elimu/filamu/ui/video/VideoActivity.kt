@@ -98,7 +98,7 @@ class VideoActivity : AppCompatActivity() {
                             },
                             additionalData = JSONObject().apply {
                                 put("eventType", LearningEventType.VIDEO_COMPLETED)
-                                put("video_playback_position_ms", videoPlayer.duration)
+                                put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.duration)
                             },
                             context = this@VideoActivity,
                             analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
@@ -138,7 +138,7 @@ class VideoActivity : AppCompatActivity() {
                 },
                 additionalData = JSONObject().apply {
                     put("eventType", LearningEventType.VIDEO_CLOSED_BEFORE_COMPLETION)
-                    put("video_playback_position_ms", videoPlayer.currentPosition)
+                    put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.currentPosition)
                 },
                 context = this@VideoActivity,
                 analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
@@ -154,5 +154,9 @@ class VideoActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         videoPlayer.pause()
+    }
+
+    companion object {
+        private const val ANALYTICS_PLAYBACK_POSITION = "video_playback_position_ms"
     }
 }
