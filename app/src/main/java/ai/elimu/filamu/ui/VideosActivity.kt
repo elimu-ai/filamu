@@ -26,6 +26,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -121,7 +122,9 @@ class VideosActivity : AppCompatActivity() {
 
                     LearningEventUtil.reportVideoLearningEvent(
                         videoGson = video,
-                        learningEventType = LearningEventType.VIDEO_OPENED,
+                        JSONObject().apply {
+                            put("eventType", LearningEventType.VIDEO_OPENED)
+                        },
                         context = this@VideosActivity,
                         analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
 

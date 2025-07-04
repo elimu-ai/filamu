@@ -91,16 +91,15 @@ class VideoActivity : AppCompatActivity() {
 
                     if (playbackState == Player.STATE_ENDED) {
                         videoTitle = intent.getStringExtra(BundleKeys.KEY_VIDEO_TITLE) ?: ""
-                        val extraData = JSONObject().apply {
-                            put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.duration)
-                        }
                         LearningEventUtil.reportVideoLearningEvent(
                             videoGson = VideoGson().apply {
                                 id = videoId
                                 title = videoTitle
                             },
-                            additionalData = extraData,
-                            learningEventType = LearningEventType.VIDEO_COMPLETED,
+                            additionalData = JSONObject().apply {
+                                put("eventType", LearningEventType.VIDEO_COMPLETED)
+                                put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.duration)
+                            },
                             context = this@VideoActivity,
                             analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
                         isVideoPlaybackCompleted = true
@@ -132,16 +131,15 @@ class VideoActivity : AppCompatActivity() {
         super.onDestroy()
 
         if (!isVideoPlaybackCompleted) {
-            val extraData = JSONObject().apply {
-                put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.currentPosition)
-            }
             LearningEventUtil.reportVideoLearningEvent(
                 videoGson = VideoGson().apply {
                     id = videoId
                     title = videoTitle
                 },
-                additionalData = extraData,
-                learningEventType = LearningEventType.VIDEO_CLOSED_BEFORE_COMPLETION,
+                additionalData = JSONObject().apply {
+                    put("eventType", LearningEventType.VIDEO_CLOSED_BEFORE_COMPLETION)
+                    put(ANALYTICS_PLAYBACK_POSITION, videoPlayer.currentPosition)
+                },
                 context = this@VideoActivity,
                 analyticsApplicationId = BuildConfig.ANALYTICS_APPLICATION_ID)
         }
