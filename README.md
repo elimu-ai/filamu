@@ -2,6 +2,10 @@
 
 Android app for watching videos.
 
+<img width="241" alt="Screenshot 2025-07-09 at 21 24 03" src="https://github.com/user-attachments/assets/7ee9a934-fa1f-4814-a0ac-d12b06bb49c0" />
+<img width="240" alt="Screenshot 2025-07-09 at 21 23 57" src="https://github.com/user-attachments/assets/27b126a1-9189-429c-a563-ccd8d377f52c" />
+
+
 Literacy skills:
 * [`LETTER_IDENTIFICATION`](https://github.com/elimu-ai/wiki/blob/main/literacy-skills/LETTER_IDENTIFICATION.md)
 * [`FAMILIAR_WORD_READING`](https://github.com/elimu-ai/wiki/blob/main/literacy-skills/FAMILIAR_WORD_READING.md)
