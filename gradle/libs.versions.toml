@@ -11,7 +11,7 @@ timber = "5.0.1"
 coroutines = "1.10.2"
 lifecycle = "2.9.1"
 hilt = "2.57"
-androidMedia3 = "1.7.1"
+androidMedia3 = "1.8.0"
 androidGradlePlugin = "8.8.2"
 kotlinAndroidPlugin = "2.2.0"
 
