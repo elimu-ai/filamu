@@ -131,6 +131,7 @@ class VideoActivity : AppCompatActivity() {
         super.onDestroy()
 
         if (!isVideoPlaybackCompleted) {
+            videoTitle = intent.getStringExtra(BundleKeys.KEY_VIDEO_TITLE) ?: ""
             LearningEventUtil.reportVideoLearningEvent(
                 videoGson = VideoGson().apply {
                     id = videoId
