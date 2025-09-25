@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace 'ai.elimu.filamu.data.video'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         minSdk 26
