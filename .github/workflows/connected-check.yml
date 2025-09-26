@@ -10,7 +10,7 @@ jobs:
   test:
     strategy:
       matrix:
-        api-level: [29, 31]
+        api-level: [29, 32]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
