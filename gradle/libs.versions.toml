@@ -13,7 +13,7 @@ lifecycle = "2.9.4"
 hilt = "2.57.1"
 androidMedia3 = "1.8.0"
 androidGradlePlugin = "8.8.2"
-kotlinAndroidPlugin = "2.2.21"
+kotlinAndroidPlugin = "2.3.0"
 
 [libraries]
 elimu-content-provider = { group = "ai.elimu", name = "content-provider", version.ref = "elimuContentProvider" }
