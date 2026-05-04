@@ -13,7 +13,7 @@ lifecycle = "2.10.0"
 hilt = "2.57.1"
 androidMedia3 = "1.8.0"
 androidGradlePlugin = "8.9.1"
-kotlinAndroidPlugin = "2.2.0"
+kotlinGradlePlugin = "2.2.0"
 
 [libraries]
 elimu-content-provider = { group = "ai.elimu", name = "content-provider", version.ref = "elimuContentProvider" }
@@ -31,7 +31,7 @@ hilt-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-
 androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "androidMedia3" }
 androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "androidMedia3" }
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
-kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinAndroidPlugin" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
